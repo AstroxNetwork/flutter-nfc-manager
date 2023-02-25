@@ -161,6 +161,17 @@ class NdefRecord {
     return length;
   }
 
+  /// Parse data from the payload in UTF-8.
+  String get data {
+    try {
+      final type = NdefRecord.URI_PREFIX_LIST[payload.first];
+      final decoded = utf8.decode(payload.sublist(1));
+      return type + decoded;
+    } catch (_) {
+      return '';
+    }
+  }
+
   /// Constructs an instance with the given values.
   ///
   /// Recommend to use other factory constructors such as `createText` or `createUri` where possible,
